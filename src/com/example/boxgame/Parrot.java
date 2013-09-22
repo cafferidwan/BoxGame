@@ -48,10 +48,10 @@ public class Parrot extends AnimatedSprite
 	static void parrotPath() 
 	{
 		MoveModifier mMod = new MoveModifier(4.0f, MainActivity.CAMERA_WIDTH + 200, MainActivity.CAMERA_WIDTH - 250, 
-				MainActivity.CAMERA_HEIGHT / 2 -30, MainActivity.CAMERA_HEIGHT / 2 - 80);
+				MainActivity.CAMERA_HEIGHT / 2 -30, MainActivity.CAMERA_HEIGHT / 2 - 140);
 		
 		MoveModifier mModLetter = new MoveModifier(4.0f, MainActivity.CAMERA_WIDTH + 200,MainActivity.CAMERA_WIDTH - 210,
-				MainActivity.CAMERA_HEIGHT / 2 + 60, MainActivity.CAMERA_HEIGHT / 2 + 20);
+				MainActivity.CAMERA_HEIGHT / 2 + 100, MainActivity.CAMERA_HEIGHT / 2 - 10);
 		
 		DelayModifier dMod = new DelayModifier((float) 0.2,new IEntityModifierListener()
 		{

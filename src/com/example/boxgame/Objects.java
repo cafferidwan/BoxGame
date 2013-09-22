@@ -4,6 +4,7 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.debug.Debug;
 
 public class Objects extends Sprite
 {
@@ -25,6 +26,12 @@ public class Objects extends Sprite
 			case TouchEvent.ACTION_DOWN:
 			{
 				//this.setScale(1.5f);
+				Debug.d("pSceneTouchEvent.x:"+pSceneTouchEvent.getX());
+				Debug.d("ball.x:"+MainActivity.ball.getX());
+//				if(pSceneTouchEvent.getX() == MainActivity.ball.getX()- MainActivity.ball.getWidth()/2)
+//				{
+//					Debug.d("Ball touched");
+//				}
 				break;
 			}
 			case TouchEvent.ACTION_MOVE: 
