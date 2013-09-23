@@ -9,6 +9,9 @@ import org.andengine.util.debug.Debug;
 public class Objects extends Sprite
 {
 
+	public static float pSceneTouchEventX, pSceneTouchEventY; 
+	public static boolean touchFlag;
+	
 	public Objects(float pX, float pY, ITextureRegion pTextureRegion,
 			VertexBufferObjectManager VertexBufferObject) 
 	{
@@ -25,9 +28,10 @@ public class Objects extends Sprite
 		{
 			case TouchEvent.ACTION_DOWN:
 			{
+				touchFlag = true;
 				//this.setScale(1.5f);
-				Debug.d("pSceneTouchEvent.x:"+pSceneTouchEvent.getX());
-				Debug.d("ball.x:"+MainActivity.ball.getX());
+				//Debug.d("pSceneTouchEvent.x:"+pSceneTouchEvent.getX());
+				//Debug.d("ball.x:"+MainActivity.ball.getX());
 //				if(pSceneTouchEvent.getX() == MainActivity.ball.getX()- MainActivity.ball.getWidth()/2)
 //				{
 //					Debug.d("Ball touched");
@@ -38,12 +42,18 @@ public class Objects extends Sprite
 			{
 				this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, 
 						pSceneTouchEvent.getY() - this.getHeight() / 2);
+			
 				break;
 			}
 			case TouchEvent.ACTION_UP:
 			{
 				//this.setScale(1.0f);
 				//playAudio2(R.raw.megh);
+				
+				pSceneTouchEventX = pSceneTouchEvent.getX();
+				pSceneTouchEventY = pSceneTouchEvent.getY();
+				touchFlag = false;
+				
 				break;
 			}
 		}

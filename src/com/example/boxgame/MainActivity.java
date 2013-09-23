@@ -6,13 +6,12 @@ import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
-import org.andengine.entity.scene.IOnAreaTouchListener;
-import org.andengine.entity.scene.ITouchArea;
+import org.andengine.entity.IEntity;
+import org.andengine.entity.modifier.AlphaModifier;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
-import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
@@ -42,31 +41,35 @@ public class MainActivity extends SimpleBaseGameActivity
 	MediaPlayer mediaPlayer = new MediaPlayer();
 	
 	private BuildableBitmapTextureAtlas mBitmapTextureAtlas;
-	public static ITextureRegion mBallTextureRegion;
-	public static ITextureRegion mBananaTextureRegion;
-	public static ITextureRegion mCrocodileTextureRegion;
+	public static ITextureRegion mMulaTextureRegion;
+	public static ITextureRegion mKolaTextureRegion;
+	public static ITextureRegion mMaTextureRegion;
 	
-	public static ITextureRegion mJackFruitTextureRegion;
+	public static ITextureRegion mMohisTextureRegion;
 	public static ITextureRegion mbackGroundTextureRegion;
 	public static ITextureRegion mKeramBoardTextureRegion;
-	public static ITextureRegion mMangoTextureRegion;
-	public static ITextureRegion mPenTextureRegion;
+	public static ITextureRegion mMeghTextureRegion;
+	public static ITextureRegion mMoiTextureRegion;
 	public static ITextureRegion mMoTextureRegion;
+	
+	public static ITextureRegion mBox1TextureRegion;
+	public static ITextureRegion mBox2TextureRegion;
 	
 	private BuildableBitmapTextureAtlas mAnimatedBitmapTextureAtlas;
 	private BuildableBitmapTextureAtlas mAnimatedBitmapTextureAtlas1;
 	public static TiledTextureRegion mParrotTextureRegion;
 	public static TiledTextureRegion mBoxTextureRegion;
 	
-	public static Sprite backGround, ball, banana, crocodile, jackFruit, keramBoard, mango, pen;
+	public static Sprite backGround, mula, kola, ma, mohis, keramBoard, megh, moi;
 	static Sprite mo;
 	static AnimatedSprite  parrot;
-	static AnimatedSprite box;
 	public TimerHandler timer1, timer2;
 	
-	float ballX , ballY, bananaX, bananaY, crocodileX, crocodileY, jackFruitX, 
-		  jackFruitY, keramBoardX, keramBoardY, mangoX, mangoY,penX, penY;
-	
+	float mulaX , mulaY, kolaX, kolaY, maX, maY, mohisX, 
+		  mohisY, keramBoardX, keramBoardY, meghX, meghY;
+	static float moiX;
+	static float moiY;
+	static Sprite openedBox, closedBox;
 	
 	@Override
 	public EngineOptions onCreateEngineOptions()
@@ -76,26 +79,26 @@ public class MainActivity extends SimpleBaseGameActivity
 		CAMERA_HEIGHT = display.getHeight();
 		CAMERA_WIDTH = display.getWidth();
 		
-		ballX = 10;
-		ballY = MainActivity.CAMERA_HEIGHT-100;
+		mulaX = 0;
+		mulaY = MainActivity.CAMERA_HEIGHT-130;
 		
-		bananaX = 110;
-		bananaY = MainActivity.CAMERA_HEIGHT-100;
+		kolaX = 50;
+		kolaY = MainActivity.CAMERA_HEIGHT-130;
 		
-		crocodileX = 220;
-		crocodileY = MainActivity.CAMERA_HEIGHT-100;
+		maX = 100;
+		maY = MainActivity.CAMERA_HEIGHT-130;
 		
-		jackFruitX = 330;
-		jackFruitY = MainActivity.CAMERA_HEIGHT-100;
+		mohisX = 600;
+		mohisY = MainActivity.CAMERA_HEIGHT-130;
 		
-		keramBoardX = 440;
-		keramBoardY = MainActivity.CAMERA_HEIGHT-100;
+		keramBoardX = 500;
+		keramBoardY = MainActivity.CAMERA_HEIGHT-130;
 		
-		mangoX = 550;
-		mangoY = MainActivity.CAMERA_HEIGHT-100;
+		meghX = 550;
+		meghY = MainActivity.CAMERA_HEIGHT-130;
 		
-		penX = 660;
-		penY = MainActivity.CAMERA_HEIGHT-100;
+		moiX = 660;
+		moiY = MainActivity.CAMERA_HEIGHT-130;
 		
 		mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
 		
@@ -114,41 +117,45 @@ public class MainActivity extends SimpleBaseGameActivity
 
 		MainActivity.mbackGroundTextureRegion = BitmapTextureAtlasTextureRegionFactory
 				.createFromAsset(this.mBitmapTextureAtlas, this, "JungleBG.png");
-		MainActivity.mBallTextureRegion = BitmapTextureAtlasTextureRegionFactory
-				.createFromAsset(this.mBitmapTextureAtlas, this, "Ball1.png");
-		MainActivity.mBananaTextureRegion = BitmapTextureAtlasTextureRegionFactory
-				.createFromAsset(this.mBitmapTextureAtlas, this, "Banana1.png");
+		MainActivity.mMulaTextureRegion = BitmapTextureAtlasTextureRegionFactory
+				.createFromAsset(this.mBitmapTextureAtlas, this, "mula-2.png");
+		MainActivity.mKolaTextureRegion = BitmapTextureAtlasTextureRegionFactory
+				.createFromAsset(this.mBitmapTextureAtlas, this, "kola-1.png");
 		
-		MainActivity.mCrocodileTextureRegion = BitmapTextureAtlasTextureRegionFactory
-				.createFromAsset(this.mBitmapTextureAtlas, this, "Crocodile1.png");
-		MainActivity.mJackFruitTextureRegion = BitmapTextureAtlasTextureRegionFactory
-				.createFromAsset(this.mBitmapTextureAtlas, this, "JackFruit1.png");
+		MainActivity.mMaTextureRegion = BitmapTextureAtlasTextureRegionFactory
+				.createFromAsset(this.mBitmapTextureAtlas, this, "ma-2.png");
+		MainActivity.mMohisTextureRegion = BitmapTextureAtlasTextureRegionFactory
+				.createFromAsset(this.mBitmapTextureAtlas, this, "mohis-2.png");
 		MainActivity.mKeramBoardTextureRegion = BitmapTextureAtlasTextureRegionFactory
 				.createFromAsset(this.mBitmapTextureAtlas, this, "keramBoard1.png");
-		MainActivity.mMangoTextureRegion = BitmapTextureAtlasTextureRegionFactory
-				.createFromAsset(this.mBitmapTextureAtlas, this, "Mango1.png");
-		MainActivity.mPenTextureRegion = BitmapTextureAtlasTextureRegionFactory
-				.createFromAsset(this.mBitmapTextureAtlas, this, "Pen1.png");
+		MainActivity.mMeghTextureRegion = BitmapTextureAtlasTextureRegionFactory
+				.createFromAsset(this.mBitmapTextureAtlas, this, "megh-2.png");
+		MainActivity.mMoiTextureRegion = BitmapTextureAtlasTextureRegionFactory
+				.createFromAsset(this.mBitmapTextureAtlas, this, "moi-2.png");
 		MainActivity.mMoTextureRegion = BitmapTextureAtlasTextureRegionFactory
 				.createFromAsset(this.mBitmapTextureAtlas, this, "mo.png");
 		
+		MainActivity.mBox1TextureRegion = BitmapTextureAtlasTextureRegionFactory
+				.createFromAsset(this.mBitmapTextureAtlas, this, "box-15.png");
+		MainActivity.mBox2TextureRegion = BitmapTextureAtlasTextureRegionFactory
+				.createFromAsset(this.mBitmapTextureAtlas, this, "box-16.png");
+		
 		mAnimatedBitmapTextureAtlas = new BuildableBitmapTextureAtlas(this.getTextureManager(), 900, 228, TextureOptions.NEAREST);
-		mAnimatedBitmapTextureAtlas1 = new BuildableBitmapTextureAtlas(this.getTextureManager(), 400, 102, TextureOptions.NEAREST);
+		mAnimatedBitmapTextureAtlas1 = new BuildableBitmapTextureAtlas(this.getTextureManager(), 600, 153, TextureOptions.NEAREST);
 		MainActivity.mParrotTextureRegion = BitmapTextureAtlasTextureRegionFactory.
 				createTiledFromAsset(this.mAnimatedBitmapTextureAtlas, this, "parrot1.png", 8, 2);
-		MainActivity.mBoxTextureRegion = BitmapTextureAtlasTextureRegionFactory.
-				createTiledFromAsset(this.mAnimatedBitmapTextureAtlas1, this, "box-2.png", 4, 1);
-		
 		try 
 		{
 			this.mBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource,
 					BitmapTextureAtlas>(0, 0, 0));
 			this.mBitmapTextureAtlas.load();
 		} 
+		
 		catch (TextureAtlasBuilderException e)
 		{
 			Debug.e(e);
 		}
+		
 		
 		try {
 			this.mAnimatedBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
@@ -176,71 +183,95 @@ public class MainActivity extends SimpleBaseGameActivity
 			{
 				// TODO Auto-generated method stub
 				
-				if(ball.collidesWith(box))
+				//Kola
+				if(Functions.collisionCheck(closedBox , kola)== true)
 				{
-					box.animate(new long[]{5, 5}, 2, 3, true);
-					Functions.bouncePath(ball, ballX, ballY);
+					MainActivity.openedBox.setVisible(true);
+					MainActivity.closedBox.setVisible(false);
+					
+					if(Objects.touchFlag == false)
+					{
+						Functions.bouncePath(kola, kolaX, kolaY);
+					}
 				}
-				else if(banana.collidesWith(box))
+				
+				//Keram board
+				else if(Functions.collisionCheck(closedBox , keramBoard)== true)
 				{
-					box.animate(new long[]{5, 5}, 2, 3, true);
-					Functions.bouncePath(banana, bananaX, bananaY);
+					MainActivity.openedBox.setVisible(true);
+					MainActivity.closedBox.setVisible(false);
+					
+					if(Objects.touchFlag == false)
+					{
+						Functions.bouncePath(keramBoard, keramBoardX, keramBoardY);
+					}
 				}
-				else if(crocodile.collidesWith(box))
+				
+				//Mohis
+				else if(Functions.collisionCheck(closedBox , mohis)== true)
 				{
-					box.animate(new long[]{5, 5}, 2, 3, true);
-					crocodile.setVisible(false);
-					Functions.bouncePath(crocodile, crocodileX, crocodileY+200);
-				}
-				else if(jackFruit.collidesWith(box))
-				{
-					box.animate(new long[]{5, 5}, 2, 3, true);
-					Functions.bouncePath(jackFruit, jackFruitX, jackFruitY);
-				}
-				else if(keramBoard.collidesWith(box))
-				{
-					box.animate(new long[]{5, 5}, 2, 3, true);
-					Functions.bouncePath(keramBoard, keramBoardX, keramBoardY);
-				}
-				else if(mango.collidesWith(box))
-				{
-					box.animate(new long[]{5, 5}, 2, 3, true);
-					Functions.bouncePath(mango, mangoX, mangoY);
-				}
-				else if(pen.collidesWith(box))
-				{
-					box.animate(new long[]{5, 5}, 2, 3, true);
-					Functions.bouncePath(pen, penX, penY);
+					MainActivity.openedBox.setVisible(true);
+					MainActivity.closedBox.setVisible(false);
+					
+					if(Objects.touchFlag == false)
+					{
+						Functions.fadeOut(mohis);
+					}
 				}
 				
 				
-				else if(!ball.collidesWith(box))
+				//Megh
+				else if(Functions.collisionCheck(closedBox , megh)== true)
 				{
-					box.animate(new long[]{5, 5}, 0, 1,true);
+					MainActivity.openedBox.setVisible(true);
+					MainActivity.closedBox.setVisible(false);
+					
+					if(Objects.touchFlag == false)
+					{
+						Functions.fadeOut(megh);
+					}
 				}
-				else if(!banana.collidesWith(box))
+				
+				//Mula
+				else if(Functions.collisionCheck(closedBox , mula)== true)
 				{
-					box.animate(new long[]{5, 5}, 0, 1,true);
+					MainActivity.openedBox.setVisible(true);
+					MainActivity.closedBox.setVisible(false);
+					
+					if(Objects.touchFlag == false)
+					{
+						Functions.fadeOut(mula);
+					}
 				}
-				else if(!crocodile.collidesWith(box))
+				
+				//Moi
+				else if(Functions.collisionCheck(closedBox , moi)== true)
 				{
-					box.animate(new long[]{5, 5}, 0, 1,true);
+					MainActivity.openedBox.setVisible(true);
+					MainActivity.closedBox.setVisible(false);
+					
+					if(Objects.touchFlag == false)
+					{
+						Functions.fadeOut(moi);
+					}
 				}
-				else if(!jackFruit.collidesWith(box))
+				
+				//Ma
+				else if(Functions.collisionCheck(closedBox , ma)== true)
 				{
-					box.animate(new long[]{5, 5}, 0, 1,true);
+					MainActivity.openedBox.setVisible(true);
+					MainActivity.closedBox.setVisible(false);
+					
+					if(Objects.touchFlag == false)
+					{
+						Functions.fadeOut(ma);
+					}
 				}
-				else if(!keramBoard.collidesWith(box))
+				
+				else
 				{
-					box.animate(new long[]{5, 5}, 0, 1,true);
-				}
-				else if(!mango.collidesWith(box))
-				{
-					box.animate(new long[]{5, 5}, 0, 1,true);
-				}
-				else if(!pen.collidesWith(box))
-				{
-					box.animate(new long[]{5, 5}, 0, 1,true);
+					MainActivity.openedBox.setVisible(false);
+					MainActivity.closedBox.setVisible(true);
 				}
 			}
 		});
@@ -260,6 +291,16 @@ public class MainActivity extends SimpleBaseGameActivity
 		backGround.setWidth(CAMERA_WIDTH);
 		mScene.attachChild(backGround);
 		
+		//opened box
+		openedBox = new Sprite(CAMERA_WIDTH/2-100, 160, mBox1TextureRegion, getVertexBufferObjectManager());
+		mScene.attachChild(openedBox);
+		openedBox.setVisible(false);
+		
+		//closed box
+		closedBox = new Sprite(CAMERA_WIDTH/2-100, 160, mBox2TextureRegion, getVertexBufferObjectManager());
+		mScene.attachChild(closedBox);
+		closedBox.setVisible(true);
+		
 		parrot = new Parrot(MainActivity.CAMERA_WIDTH+500, MainActivity.CAMERA_HEIGHT/2-50, mParrotTextureRegion, this.getVertexBufferObjectManager());
 		parrot.animate(new long[]{200, 200, 200, 200, 200, 200, 200, 200}, 0, 7, true);
 		parrot.setFlippedHorizontal(true);
@@ -268,36 +309,34 @@ public class MainActivity extends SimpleBaseGameActivity
 		mScene.registerTouchArea(parrot);
 		mScene.attachChild(parrot);
 		
-		box = new AnimatedSprite(CAMERA_WIDTH/2-40, CAMERA_HEIGHT/2-90, mBoxTextureRegion, getVertexBufferObjectManager());
-		mScene.attachChild(box);		
 		
-		banana = new Objects(bananaX, bananaY, mBananaTextureRegion, getVertexBufferObjectManager());
-		mScene.registerTouchArea(banana);
-		mScene.attachChild(banana);
+		kola = new Objects(kolaX, kolaY, mKolaTextureRegion, getVertexBufferObjectManager());
+		mScene.registerTouchArea(kola);
+		mScene.attachChild(kola);
 		
-		ball = new Objects(ballX, ballY, mBallTextureRegion, getVertexBufferObjectManager());
-		mScene.registerTouchArea(ball);
-		mScene.attachChild(ball);
+		mula = new Objects(mulaX, mulaY, mMulaTextureRegion, getVertexBufferObjectManager());
+		mScene.registerTouchArea(mula);
+		mScene.attachChild(mula);
 		
-		crocodile = new Objects(crocodileX, crocodileY, mCrocodileTextureRegion, getVertexBufferObjectManager());
-		mScene.registerTouchArea(crocodile);
-		mScene.attachChild(crocodile);
+		ma = new Objects(maX, maY, mMaTextureRegion, getVertexBufferObjectManager());
+		mScene.registerTouchArea(ma);
+		mScene.attachChild(ma);
 		
-		jackFruit = new Objects(jackFruitX, jackFruitY, mJackFruitTextureRegion, getVertexBufferObjectManager());
-		mScene.registerTouchArea(jackFruit);
-		mScene.attachChild(jackFruit);
+		mohis = new Objects(mohisX, mohisY, mMohisTextureRegion, getVertexBufferObjectManager());
+		mScene.registerTouchArea(mohis);
+		mScene.attachChild(mohis);
 		
 		keramBoard = new Objects(keramBoardX, keramBoardY, mKeramBoardTextureRegion, getVertexBufferObjectManager());
 		mScene.registerTouchArea(keramBoard);
 		mScene.attachChild(keramBoard);
 		
-		mango = new Objects(mangoX, mangoY, mMangoTextureRegion, getVertexBufferObjectManager());
-		mScene.registerTouchArea(mango);
-		mScene.attachChild(mango);
+		megh = new Objects(meghX, meghY, mMeghTextureRegion, getVertexBufferObjectManager());
+		mScene.registerTouchArea(megh);
+		mScene.attachChild(megh);
 		
-		pen = new Objects(penX, penY, mPenTextureRegion, getVertexBufferObjectManager());
-		mScene.registerTouchArea(pen);
-		mScene.attachChild(pen);
+		moi = new Objects(moiX, moiY, mMoiTextureRegion, getVertexBufferObjectManager());
+		mScene.registerTouchArea(moi);
+		mScene.attachChild(moi);
 		
 		mo = new Objects(900, CAMERA_HEIGHT-100, mMoTextureRegion, getVertexBufferObjectManager());
 		mScene.registerTouchArea(mo);
@@ -309,24 +348,9 @@ public class MainActivity extends SimpleBaseGameActivity
 		mScene.registerUpdateHandler(timer1);
 		//mScene.setOnAreaTouchListener(this);
 		
+		
 		return mScene;
 	}
-//
-//	@Override
-//	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, ITouchArea pTouchArea, float pTouchAreaLocalX,
-//			float pTouchAreaLocalY) 
-//	{
-//		// TODO Auto-generated method stub
-//
-//		if(pSceneTouchEvent.isActionDown())
-//		{
-//			if(pSceneTouchEvent.getX() == ball.getX()-ball.getWidth()/2)
-//			{
-//				Debug.d("Ball touched");
-//			}
-//		}
-//		return false;
-//	}
 
 
 	public void playAudio(int val)
