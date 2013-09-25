@@ -87,8 +87,6 @@ public class Objects extends Sprite
 						Functions.playAudio(R.raw.mohis);
 					}
 				}
-				
-
 				break;
 			}
 			case TouchEvent.ACTION_UP:

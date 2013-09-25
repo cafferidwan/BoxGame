@@ -40,7 +40,7 @@ public final class R {
         public static final int mohis=0x7f040004;
         public static final int moi=0x7f040005;
         public static final int mula=0x7f040006;
-        public static final int parrot_introducing_mo=0x7f040007;
+        public static final int parrot=0x7f040007;
     }
     public static final class string {
         public static final int action_settings=0x7f060001;

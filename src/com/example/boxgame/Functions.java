@@ -11,7 +11,7 @@ import org.andengine.entity.modifier.PathModifier.Path;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.util.debug.Debug;
 import org.andengine.util.modifier.ease.EaseBounceOut;
-import org.andengine.util.modifier.ease.EaseCircularOut;
+import org.andengine.util.modifier.ease.EaseCircularInOut;
 
 import android.content.Context;
 import android.media.MediaPlayer;
@@ -37,40 +37,74 @@ public class Functions
 		}
 		
 	}
-	public static void jump(Sprite a)
+	public static void jump(Sprite a, int k)
 	{
 		 
-        final float jumpDuration = (float) 1.0;
-        //final int jumpHeight = 50;             
-        final float startY = MainActivity.closedBox.getY();
-        final float peakY = 70;
+        float jumpDuration = (float) 0.7;
+        float startX = 0;
+        float startY = 0;
         
-        final float startX = a.getX();
-        final float endX = MainActivity.CAMERA_WIDTH-30;
-        final float peakX = MainActivity.CAMERA_WIDTH/2+30;
+        float endX = 0;
+        float endY = 0;
         
-        float midPointX = MainActivity.closedBox.getX()- a.getX()/2;
-        float midPointY = 45;
+        float midPointX = 0 ;
+        float midPointY = 0 ;
         
+        //int j =(int)( Math.random()*2);
         
-        jumpModifier = new SequenceEntityModifier(
-                new MoveYModifier(jumpDuration, startY, midPointY, EaseCircularOut.getInstance()),
-                new MoveYModifier(jumpDuration, peakY, startY, EaseBounceOut.getInstance()));
-        a.registerEntityModifier(jumpModifier);
+        if(k == 0)
+        {
+        	startX = MainActivity.closedBox.getX();
+        	startY = MainActivity.closedBox.getY();
+        	
+        	midPointX = 120;
+        	midPointY = 45;
+        	
+        	endX = 50;
+        	endY = MainActivity.closedBox.getY();
+        	
+        	jumpModifier = new SequenceEntityModifier(
+                    new MoveYModifier(jumpDuration, startY, midPointY, EaseCircularInOut.getInstance()),
+                    new MoveYModifier(jumpDuration, midPointY, endY, EaseBounceOut.getInstance()));
+            a.registerEntityModifier(jumpModifier);
+            
+            jumpModifier1 = new SequenceEntityModifier(
+                    new MoveXModifier(jumpDuration, startX, midPointX, EaseCircularInOut.getInstance()),
+                    new MoveXModifier(jumpDuration, midPointX, endX, EaseBounceOut.getInstance()));
+            a.registerEntityModifier(jumpModifier1);
+        }
+        else if(k == 1)
+        {
+        	startX = MainActivity.closedBox.getX()+30;
+        	startY = MainActivity.closedBox.getY();
+        	
+        	midPointX = MainActivity.CAMERA_WIDTH/2+70;
+        	midPointY = 45;
+        	
+        	endX = MainActivity.CAMERA_WIDTH-130;
+        	endY = MainActivity.closedBox.getY()+70;
+        	
+        	jumpModifier = new SequenceEntityModifier(
+                    new MoveYModifier(jumpDuration, startY, midPointY, EaseCircularInOut.getInstance()),
+                    new MoveYModifier(jumpDuration, midPointY, endY, EaseBounceOut.getInstance()));
+            a.registerEntityModifier(jumpModifier);
+            
+            jumpModifier1 = new SequenceEntityModifier(
+                    new MoveXModifier(jumpDuration, startX, midPointX, EaseCircularInOut.getInstance()),
+                    new MoveXModifier(jumpDuration, midPointX, endX, EaseBounceOut.getInstance()));
+            a.registerEntityModifier(jumpModifier1);
+            
+        }
         
-        jumpModifier1 = new SequenceEntityModifier(
-                new MoveXModifier(jumpDuration, startX, peakX, EaseCircularOut.getInstance()),
-                new MoveXModifier(jumpDuration, peakX, endX, EaseBounceOut.getInstance()));
-        a.registerEntityModifier(jumpModifier1);
 	}
 	
-	public static void bouncePath(Sprite a, float x, float y)
+	public static void path(final Sprite a1)
 	{
 		
-		final Path bouncePath = new Path(5).to(Objects.pSceneTouchEventX, Objects.pSceneTouchEventY).
-				to(260,70).to(200, 80).to(170, 70).to(x, y);
+		final Path bouncePath = new Path(2).to(a1.getX(), a1.getY()).
+				to(MainActivity.closedBox.getX(), MainActivity.closedBox.getY()+20);
 		
-		a.registerEntityModifier(new PathModifier((float)2.1, bouncePath,  new IPathModifierListener() 
+		a1.registerEntityModifier(new PathModifier((float)1.4, bouncePath,  new IPathModifierListener() 
 		{
 			@Override
 			public void onPathStarted(final PathModifier pPathModifier, final IEntity pEntity) 
@@ -89,6 +123,7 @@ public class Functions
 			public void onPathWaypointFinished(final PathModifier pPathModifier, final IEntity pEntity, final int pWaypointIndex) 
 			{
 				Debug.d("onPathWaypointFinished: " + pWaypointIndex);
+				
 			}
 
 			@Override
@@ -117,7 +152,7 @@ public class Functions
 		        {
 		                super.onModifierFinished(pItem);
 		                // Your action after finishing modifier
-						a.setY(MainActivity.CAMERA_HEIGHT+200);
+		                a.setY(MainActivity.CAMERA_HEIGHT+200);
 		        }
 		};
 		 

@@ -31,6 +31,9 @@ public class Parrot extends AnimatedSprite
 		{
 			case TouchEvent.ACTION_DOWN:
 			
+				Functions.audioPlay = true;
+				Functions.playAudio(R.raw.mo);
+				
 			break;
 			
 			case TouchEvent.ACTION_UP:
@@ -60,7 +63,8 @@ public class Parrot extends AnimatedSprite
 					public void onModifierStarted(IModifier<IEntity> arg0,
 							IEntity arg1) 
 					{
-						
+						Functions.audioPlay = true;
+						Functions.playAudio(R.raw.parrot);
 					}
 
 					@Override

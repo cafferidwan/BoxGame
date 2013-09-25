@@ -11,6 +11,7 @@ import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
@@ -35,8 +36,6 @@ public class MainActivity extends SimpleBaseGameActivity
 
 	static int CAMERA_WIDTH;
 	static int CAMERA_HEIGHT;
-	int START_APPEARING_DELAY = 13;
-	static float APPEARING_TIME = 2.0f;
 
 	public Camera mCamera;
 	public static Scene mScene;
@@ -193,28 +192,14 @@ public class MainActivity extends SimpleBaseGameActivity
 					if(i==1)
 					{
 
-					MainActivity.openedBox.setVisible(true);
-					MainActivity.closedBox.setVisible(false);
+						MainActivity.openedBox.setVisible(true);
+						MainActivity.closedBox.setVisible(false);
 					
-					if(Objects.touchFlag == false)
-					{
-							// Create the moving body
-							Functions.jump(kola);
-					}
-//						Functions.bouncePath(kola, kolaX, kolaY);
-						
-						
-//						final Entity playerEntity = kola;//Get player entity here.
-//
-//				        final float jumpDuration = 2;
-//				        final float startX = playerEntity.getX();
-//				        final float jumpHeight = 100;
-//
-//				        final MoveYModifier moveUpModifier = new MoveYModifier(jumpDuration / 2, startX, startX - jumpHeight); // - since we want the sprite to go up.
-//				        final MoveYModifier moveDownModifier = new MoveYModifier(jumpDuration / 2, startX + jumpHeight, startX);
-//				        final SequenceEntityModifier modifier = new SequenceEntityModifier(moveUpModifier, moveDownModifier);
-//
-//				        playerEntity.registerEntityModifier(modifier);
+						if(Objects.touchFlag == false)
+						{
+							// Create jump
+							Functions.jump(kola, 0);
+						}
 					}
 				}
 				
@@ -226,7 +211,8 @@ public class MainActivity extends SimpleBaseGameActivity
 					
 					if(Objects.touchFlag == false)
 					{
-						Functions.bouncePath(keramBoard, keramBoardX, keramBoardY);
+						// Create jump
+						Functions.jump(keramBoard, 1);
 					}
 				}
 				
@@ -362,7 +348,24 @@ public class MainActivity extends SimpleBaseGameActivity
 		mScene.registerTouchArea(moi);
 		mScene.attachChild(moi);
 		
-		mo = new Sprite(900, CAMERA_HEIGHT-100, mMoTextureRegion, getVertexBufferObjectManager());
+		mo = new Sprite(900, CAMERA_HEIGHT-100, mMoTextureRegion, getVertexBufferObjectManager())
+		{
+			@Override
+			public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, final float pTouchAreaLocalY)
+			{
+				switch (pSceneTouchEvent.getAction()) 
+				{
+					case TouchEvent.ACTION_DOWN:
+					
+						Functions.audioPlay = true;
+						Functions.playAudio(R.raw.mo);
+						
+					break;
+				}
+
+				return true;
+			}
+		};
 		mo.setHeight(60);
 		mo.setWidth(60);
 		mScene.attachChild(mo);
