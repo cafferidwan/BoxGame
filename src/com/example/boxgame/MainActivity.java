@@ -6,12 +6,11 @@ import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
-import org.andengine.entity.IEntity;
-import org.andengine.entity.modifier.AlphaModifier;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
@@ -21,10 +20,14 @@ import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtla
 import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
+import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.andengine.util.color.Color;
 import org.andengine.util.debug.Debug;
-import android.media.MediaPlayer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import android.content.Context;
+import android.hardware.SensorManager;
 import android.view.Display;
 
 public class MainActivity extends SimpleBaseGameActivity 
@@ -34,11 +37,10 @@ public class MainActivity extends SimpleBaseGameActivity
 	static int CAMERA_HEIGHT;
 	int START_APPEARING_DELAY = 13;
 	static float APPEARING_TIME = 2.0f;
-	Boolean audioPlay = false;
 
 	public Camera mCamera;
-	public Scene mScene;
-	MediaPlayer mediaPlayer = new MediaPlayer();
+	public static Scene mScene;
+	static Context context;
 	
 	private BuildableBitmapTextureAtlas mBitmapTextureAtlas;
 	public static ITextureRegion mMulaTextureRegion;
@@ -186,12 +188,33 @@ public class MainActivity extends SimpleBaseGameActivity
 				//Kola
 				if(Functions.collisionCheck(closedBox , kola)== true)
 				{
+					int i = 0;
+					i++;
+					if(i==1)
+					{
+
 					MainActivity.openedBox.setVisible(true);
 					MainActivity.closedBox.setVisible(false);
 					
 					if(Objects.touchFlag == false)
 					{
-						Functions.bouncePath(kola, kolaX, kolaY);
+							// Create the moving body
+							Functions.jump(kola);
+					}
+//						Functions.bouncePath(kola, kolaX, kolaY);
+						
+						
+//						final Entity playerEntity = kola;//Get player entity here.
+//
+//				        final float jumpDuration = 2;
+//				        final float startX = playerEntity.getX();
+//				        final float jumpHeight = 100;
+//
+//				        final MoveYModifier moveUpModifier = new MoveYModifier(jumpDuration / 2, startX, startX - jumpHeight); // - since we want the sprite to go up.
+//				        final MoveYModifier moveDownModifier = new MoveYModifier(jumpDuration / 2, startX + jumpHeight, startX);
+//				        final SequenceEntityModifier modifier = new SequenceEntityModifier(moveUpModifier, moveDownModifier);
+//
+//				        playerEntity.registerEntityModifier(modifier);
 					}
 				}
 				
@@ -253,6 +276,7 @@ public class MainActivity extends SimpleBaseGameActivity
 					if(Objects.touchFlag == false)
 					{
 						Functions.fadeOut(moi);
+						
 					}
 				}
 				
@@ -338,42 +362,18 @@ public class MainActivity extends SimpleBaseGameActivity
 		mScene.registerTouchArea(moi);
 		mScene.attachChild(moi);
 		
-		mo = new Objects(900, CAMERA_HEIGHT-100, mMoTextureRegion, getVertexBufferObjectManager());
-		mScene.registerTouchArea(mo);
+		mo = new Sprite(900, CAMERA_HEIGHT-100, mMoTextureRegion, getVertexBufferObjectManager());
 		mo.setHeight(60);
 		mo.setWidth(60);
 		mScene.attachChild(mo);
 		Parrot.parrotPath();
 		
 		mScene.registerUpdateHandler(timer1);
-		//mScene.setOnAreaTouchListener(this);
 		
+		//getting the context
+		MainActivity.context = getApplicationContext();
 		
 		return mScene;
 	}
-
-
-	public void playAudio(int val)
-	{
-		if(audioPlay)
-		{
-			if(!mediaPlayer.isPlaying())
-			{
-				mediaPlayer.reset();
-				mediaPlayer = MediaPlayer.create(getApplicationContext(), val);
-				
-				try 
-				{
-					mediaPlayer.start();
-					mediaPlayer.setLooping(false);
-				} 
-				catch (IllegalStateException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			audioPlay = true;
-		}
-	}
+	
 }
