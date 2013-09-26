@@ -1,5 +1,7 @@
 package com.example.boxgame;
 
+import java.util.Random;
+
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -66,10 +68,8 @@ public class MainActivity extends SimpleBaseGameActivity
 	static AnimatedSprite  parrot;
 	public TimerHandler timer1, timer2;
 	
-	float mulaX , mulaY, kolaX, kolaY, maX, maY, mohisX, 
-		  mohisY, keramBoardX, keramBoardY, meghX, meghY;
-	static float moiX;
-	static float moiY;
+	static float mulaX , mulaY, kolaX, kolaY, maX, maY, mohisX, 
+		  mohisY, keramBoardX, keramBoardY, meghX, meghY, moiX, moiY;
 	static Sprite openedBox, closedBox;
 	
 	@Override
@@ -80,26 +80,26 @@ public class MainActivity extends SimpleBaseGameActivity
 		CAMERA_HEIGHT = display.getHeight();
 		CAMERA_WIDTH = display.getWidth();
 		
-		mulaX = 0;
-		mulaY = MainActivity.CAMERA_HEIGHT-130;
+		mulaX = CAMERA_WIDTH/2 - CAMERA_WIDTH/4;
+		mulaY = CAMERA_HEIGHT-CAMERA_HEIGHT*(4/3);
 		
 		kolaX = 50;
-		kolaY = MainActivity.CAMERA_HEIGHT-130;
+		kolaY = CAMERA_HEIGHT-CAMERA_HEIGHT/4;
 		
-		maX = 100;
-		maY = MainActivity.CAMERA_HEIGHT-130;
+		maX = 50;
+		maY = CAMERA_HEIGHT-CAMERA_HEIGHT*(4/3);
 		
-		mohisX = 600;
-		mohisY = MainActivity.CAMERA_HEIGHT-130;
+		mohisX = CAMERA_WIDTH - 100;
+		mohisY = CAMERA_HEIGHT-CAMERA_HEIGHT*(4/3);
 		
 		keramBoardX = 500;
-		keramBoardY = MainActivity.CAMERA_HEIGHT-130;
+		keramBoardY = CAMERA_HEIGHT-130;
 		
-		meghX = 550;
-		meghY = MainActivity.CAMERA_HEIGHT-130;
+		meghX = CAMERA_WIDTH - 100;
+		meghY = CAMERA_HEIGHT-CAMERA_HEIGHT/4;
 		
-		moiX = 660;
-		moiY = MainActivity.CAMERA_HEIGHT-130;
+		moiX = CAMERA_WIDTH/2;
+		moiY = CAMERA_HEIGHT-CAMERA_HEIGHT*(4/3);
 		
 		mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
 		
@@ -301,13 +301,13 @@ public class MainActivity extends SimpleBaseGameActivity
 		backGround.setWidth(CAMERA_WIDTH);
 		mScene.attachChild(backGround);
 		
-		//opened box
-		openedBox = new Sprite(CAMERA_WIDTH/2-100, 160, mBox1TextureRegion, getVertexBufferObjectManager());
+		//opened box-y:160
+		openedBox = new Sprite(CAMERA_WIDTH/2-100, CAMERA_HEIGHT/2, mBox1TextureRegion, getVertexBufferObjectManager());
 		mScene.attachChild(openedBox);
 		openedBox.setVisible(false);
 		
 		//closed box
-		closedBox = new Sprite(CAMERA_WIDTH/2-100, 160, mBox2TextureRegion, getVertexBufferObjectManager());
+		closedBox = new Sprite(CAMERA_WIDTH/2-100, CAMERA_HEIGHT/2, mBox2TextureRegion, getVertexBufferObjectManager());
 		mScene.attachChild(closedBox);
 		closedBox.setVisible(true);
 		

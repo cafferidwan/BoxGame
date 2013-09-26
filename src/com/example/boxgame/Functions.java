@@ -54,14 +54,14 @@ public class Functions
         
         if(k == 0)
         {
-        	startX = MainActivity.closedBox.getX();
-        	startY = MainActivity.closedBox.getY();
+        	startX = a.getX();
+        	startY = a.getY();
         	
         	midPointX = 120;
-        	midPointY = 45;
+        	midPointY = 50;
         	
-        	endX = 50;
-        	endY = MainActivity.closedBox.getY();
+        	endX = MainActivity.kolaX;
+        	endY = MainActivity.kolaY;
         	
         	jumpModifier = new SequenceEntityModifier(
                     new MoveYModifier(jumpDuration, startY, midPointY, EaseCircularInOut.getInstance()),
@@ -75,14 +75,14 @@ public class Functions
         }
         else if(k == 1)
         {
-        	startX = MainActivity.closedBox.getX()+30;
-        	startY = MainActivity.closedBox.getY();
+        	startX = a.getX();
+        	startY = a.getY();
         	
-        	midPointX = MainActivity.CAMERA_WIDTH/2+70;
-        	midPointY = 45;
+        	midPointX = MainActivity.CAMERA_WIDTH/2+100;
+        	midPointY = 50;
         	
-        	endX = MainActivity.CAMERA_WIDTH-130;
-        	endY = MainActivity.closedBox.getY()+70;
+        	endX = MainActivity.keramBoardX;
+        	endY = MainActivity.keramBoardY;
         	
         	jumpModifier = new SequenceEntityModifier(
                     new MoveYModifier(jumpDuration, startY, midPointY, EaseCircularInOut.getInstance()),
@@ -98,11 +98,11 @@ public class Functions
         
 	}
 	
-	public static void path(final Sprite a1)
+	public static void paths(final Sprite a1)
 	{
 		
 		final Path bouncePath = new Path(2).to(a1.getX(), a1.getY()).
-				to(MainActivity.closedBox.getX(), MainActivity.closedBox.getY()+20);
+				to(23,44);
 		
 		a1.registerEntityModifier(new PathModifier((float)1.4, bouncePath,  new IPathModifierListener() 
 		{

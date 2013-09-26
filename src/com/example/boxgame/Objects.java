@@ -8,7 +8,6 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 public class Objects extends Sprite
 {
 
-	public static float pSceneTouchEventX, pSceneTouchEventY; 
 	public static boolean touchFlag;
 	
 	int i =0;
@@ -92,8 +91,7 @@ public class Objects extends Sprite
 			case TouchEvent.ACTION_UP:
 			{
 				i=0;
-				pSceneTouchEventX = pSceneTouchEvent.getX();
-				pSceneTouchEventY = pSceneTouchEvent.getY();
+				
 				touchFlag = false;
 				
 				break;
