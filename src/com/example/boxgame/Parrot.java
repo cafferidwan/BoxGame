@@ -79,15 +79,9 @@ public class Parrot extends AnimatedSprite
 		
 		SequenceEntityModifier parrot_sm = new SequenceEntityModifier(mMod,dMod);
 		SequenceEntityModifier mLetter_sm = new SequenceEntityModifier(mModLetter,dMod);
-		//RotationModifier rm1 = new RotationModifier(1.4f, 0.0f, 1.3f);
-		//RotationModifier rm2 = new RotationModifier(1.4f, 1.3f, 0.0f);
 		
 		MainActivity.parrot.registerEntityModifier(parrot_sm);
 		MainActivity.mo.registerEntityModifier(mLetter_sm);
-		
-//		SequenceEntityModifier mLetter_sm2 = new SequenceEntityModifier(rm1,rm2);
-//		LoopEntityModifier Lpm = new LoopEntityModifier(mLetter_sm2);
-//		MainActivity.mo.registerEntityModifier(Lpm);
 		
 	}
 }
