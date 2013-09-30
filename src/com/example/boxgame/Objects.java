@@ -4,6 +4,7 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.debug.Debug;
 
 public class Objects extends Sprite
 {
@@ -86,6 +87,20 @@ public class Objects extends Sprite
 						Functions.playAudio(R.raw.mohis);
 					}
 				}
+				else if(pSceneTouchEvent.getX()- this.getWidth()/2 == MainActivity.kola.getX() && 
+						pSceneTouchEvent.getY()- this.getHeight()/2 == MainActivity.kola.getY())
+				{
+					i++;
+					if(i==1)
+					{
+						Debug.d("////////");
+						Debug.d("closedBox.getX():"+MainActivity.closedBox.getX());
+						Debug.d("kola.getX():"+MainActivity.kola.getX());
+						Debug.d("closedBox.getY():"+MainActivity.closedBox.getY());
+						Debug.d("kola.getY():"+MainActivity.kola.getY());
+					}
+				}
+				
 				break;
 			}
 			case TouchEvent.ACTION_UP:
@@ -93,6 +108,19 @@ public class Objects extends Sprite
 				i=0;
 				
 				touchFlag = false;
+				if(pSceneTouchEvent.getX()- this.getWidth()/2 == MainActivity.kola.getX() && 
+						pSceneTouchEvent.getY()- this.getHeight()/2 == MainActivity.kola.getY())
+				{
+					i++;
+					if(i==1)
+					{
+						Debug.d("////////");
+						Debug.d("1closedBox.getX():"+MainActivity.closedBox.getX());
+						Debug.d("1kola.getX():"+MainActivity.kola.getX());
+						Debug.d("1closedBox.getY():"+MainActivity.closedBox.getY());
+						Debug.d("1kola.getY():"+MainActivity.kola.getY());
+					}
+				}
 				
 				break;
 			}

@@ -81,16 +81,16 @@ public class MainActivity extends SimpleBaseGameActivity
 		CAMERA_WIDTH = display.getWidth();
 		
 		mulaX = CAMERA_WIDTH/2 - CAMERA_WIDTH/4;
-		mulaY = CAMERA_HEIGHT-CAMERA_HEIGHT*(4/3);
+		mulaY =	CAMERA_HEIGHT/2 - CAMERA_HEIGHT/4;
 		
 		kolaX = 50;
 		kolaY = CAMERA_HEIGHT-CAMERA_HEIGHT/4;
 		
 		maX = 50;
-		maY = CAMERA_HEIGHT-CAMERA_HEIGHT*(4/3);
+		maY = CAMERA_HEIGHT/2 - CAMERA_HEIGHT/4;
 		
 		mohisX = CAMERA_WIDTH - 100;
-		mohisY = CAMERA_HEIGHT-CAMERA_HEIGHT*(4/3);
+		mohisY = CAMERA_HEIGHT/2 - CAMERA_HEIGHT/4;
 		
 		keramBoardX = 500;
 		keramBoardY = CAMERA_HEIGHT-130;
@@ -99,7 +99,7 @@ public class MainActivity extends SimpleBaseGameActivity
 		meghY = CAMERA_HEIGHT-CAMERA_HEIGHT/4;
 		
 		moiX = CAMERA_WIDTH/2;
-		moiY = CAMERA_HEIGHT-CAMERA_HEIGHT*(4/3);
+		moiY = CAMERA_HEIGHT/2 - CAMERA_HEIGHT/4;
 		
 		mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
 		
@@ -184,31 +184,26 @@ public class MainActivity extends SimpleBaseGameActivity
 			{
 				// TODO Auto-generated method stub
 				
-				//Kola
-				if(Functions.collisionCheck(closedBox , kola)== true)
+				if(Functions.collisoinCheck(closedBox, kola)==1 ||
+						Functions.collisoinCheck(closedBox, kola)==2)
 				{
-					int i = 0;
-					i++;
-					if(i==1)
+					MainActivity.openedBox.setVisible(true);
+					MainActivity.closedBox.setVisible(false);
+				
+					if(Objects.touchFlag == false)
 					{
-
-						MainActivity.openedBox.setVisible(true);
-						MainActivity.closedBox.setVisible(false);
-					
-						if(Objects.touchFlag == false)
-						{
-							// Create jump
-							Functions.jump(kola, 0);
-						}
+						// Create jump
+						Functions.jump(kola, 0);
 					}
 				}
 				
 				//Keram board
-				else if(Functions.collisionCheck(closedBox , keramBoard)== true)
+				else if(Functions.collisoinCheck(closedBox, keramBoard)==1 ||
+						Functions.collisoinCheck(closedBox, keramBoard)==2)
 				{
 					MainActivity.openedBox.setVisible(true);
 					MainActivity.closedBox.setVisible(false);
-					
+				
 					if(Objects.touchFlag == false)
 					{
 						// Create jump
@@ -217,24 +212,25 @@ public class MainActivity extends SimpleBaseGameActivity
 				}
 				
 				//Mohis
-				else if(Functions.collisionCheck(closedBox , mohis)== true)
+				else if(Functions.collisoinCheck(closedBox, mohis)==1 ||
+						Functions.collisoinCheck(closedBox, mohis)==2)
 				{
 					MainActivity.openedBox.setVisible(true);
 					MainActivity.closedBox.setVisible(false);
-					
+				
 					if(Objects.touchFlag == false)
 					{
 						Functions.fadeOut(mohis);
 					}
 				}
 				
-				
 				//Megh
-				else if(Functions.collisionCheck(closedBox , megh)== true)
+				else if(Functions.collisoinCheck(closedBox, megh)==1 ||
+						Functions.collisoinCheck(closedBox, megh)==2)
 				{
 					MainActivity.openedBox.setVisible(true);
 					MainActivity.closedBox.setVisible(false);
-					
+				
 					if(Objects.touchFlag == false)
 					{
 						Functions.fadeOut(megh);
@@ -242,11 +238,12 @@ public class MainActivity extends SimpleBaseGameActivity
 				}
 				
 				//Mula
-				else if(Functions.collisionCheck(closedBox , mula)== true)
+				else if(Functions.collisoinCheck(closedBox, mula)==1 ||
+						Functions.collisoinCheck(closedBox, mula)==2)
 				{
 					MainActivity.openedBox.setVisible(true);
 					MainActivity.closedBox.setVisible(false);
-					
+				
 					if(Objects.touchFlag == false)
 					{
 						Functions.fadeOut(mula);
@@ -254,24 +251,25 @@ public class MainActivity extends SimpleBaseGameActivity
 				}
 				
 				//Moi
-				else if(Functions.collisionCheck(closedBox , moi)== true)
+				else if(Functions.collisoinCheck(closedBox, moi)==1 ||
+						Functions.collisoinCheck(closedBox, moi)==2)
 				{
 					MainActivity.openedBox.setVisible(true);
 					MainActivity.closedBox.setVisible(false);
-					
+				
 					if(Objects.touchFlag == false)
 					{
 						Functions.fadeOut(moi);
-						
 					}
 				}
 				
 				//Ma
-				else if(Functions.collisionCheck(closedBox , ma)== true)
+				else if(Functions.collisoinCheck(closedBox, ma)==1 ||
+						Functions.collisoinCheck(closedBox, ma)==2)
 				{
 					MainActivity.openedBox.setVisible(true);
 					MainActivity.closedBox.setVisible(false);
-					
+				
 					if(Objects.touchFlag == false)
 					{
 						Functions.fadeOut(ma);

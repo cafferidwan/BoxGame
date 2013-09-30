@@ -12,31 +12,46 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.util.debug.Debug;
 import org.andengine.util.modifier.ease.EaseBounceOut;
 import org.andengine.util.modifier.ease.EaseCircularInOut;
+import org.andengine.util.modifier.ease.EaseCubicIn;
+import org.andengine.util.modifier.ease.EaseQuadIn;
+import org.andengine.util.modifier.ease.EaseQuadOut;
+import org.andengine.util.modifier.ease.EaseQuartIn;
 
 import android.content.Context;
 import android.media.MediaPlayer;
 
 public class Functions 
 {
+	
 	static Boolean audioPlay = false;
 	static MediaPlayer mediaPlayer = new MediaPlayer();
-	
+	static int val;
 	public static SequenceEntityModifier jumpModifier, jumpModifier1;
 	
+	
 	//a is the Box and b is the other Object
-	public static boolean collisionCheck(Sprite a, Sprite b)
+	public static int collisoinCheck(Sprite a, Sprite b)
 	{
-		
-		if(b.collidesWith(a))
+		if(a.getX()-b.getX()>-30 && a.getX()-b.getX()<90 && a.getY()-b.getY()<50 && a.getY()-b.getY()>-135)
 		{
-			return true;
+			val = 1;
+			Debug.d("Close1");
+			return val;
+		}
+		else if(b.getX()-a.getX()>20 && b.getX()-a.getX()<140 && a.getY()-b.getY()<50 && a.getY()-b.getY()>-135)
+		{
+			val = 2;
+			Debug.d("Close2");
+			return val;
 		}
 		else
 		{
-			return false;
+			Debug.d("Not Close");
+			return 0;
 		}
-		
 	}
+	
+	//jump functions
 	public static void jump(Sprite a, int k)
 	{
 		 
@@ -50,6 +65,9 @@ public class Functions
         float midPointX = 0 ;
         float midPointY = 0 ;
         
+        float midPointX1 = 0 ;
+        float midPointY1 = 0 ;
+        
         //int j =(int)( Math.random()*2);
         
         if(k == 0)
@@ -58,18 +76,22 @@ public class Functions
         	startY = a.getY();
         	
         	midPointX = 120;
+        	midPointX1 = 80;
         	midPointY = 50;
+        	midPointY1 = 70;
         	
         	endX = MainActivity.kolaX;
         	endY = MainActivity.kolaY;
         	
         	jumpModifier = new SequenceEntityModifier(
-                    new MoveYModifier(jumpDuration, startY, midPointY, EaseCircularInOut.getInstance()),
+                    new MoveYModifier(jumpDuration, startY, midPointY,EaseQuadOut.getInstance()),
+                    //new MoveYModifier(jumpDuration, midPointY, midPointY1),
                     new MoveYModifier(jumpDuration, midPointY, endY, EaseBounceOut.getInstance()));
             a.registerEntityModifier(jumpModifier);
             
             jumpModifier1 = new SequenceEntityModifier(
-                    new MoveXModifier(jumpDuration, startX, midPointX, EaseCircularInOut.getInstance()),
+                    new MoveXModifier(jumpDuration, startX, midPointX,EaseQuadOut.getInstance()),
+//                    new MoveXModifier(jumpDuration, midPointX, midPointX1),
                     new MoveXModifier(jumpDuration, midPointX, endX, EaseBounceOut.getInstance()));
             a.registerEntityModifier(jumpModifier1);
         }
@@ -98,13 +120,13 @@ public class Functions
         
 	}
 	
-	public static void paths(final Sprite a1)
+	//FadeOut Function
+	public static void fadeOut(final Sprite a)
 	{
+		final Path boxPath = new Path(2).to(a.getX(), a.getY()).
+				to(MainActivity.closedBox.getX(), MainActivity.closedBox.getY());
 		
-		final Path bouncePath = new Path(2).to(a1.getX(), a1.getY()).
-				to(23,44);
-		
-		a1.registerEntityModifier(new PathModifier((float)1.4, bouncePath,  new IPathModifierListener() 
+		a.registerEntityModifier(new PathModifier((float)0.4, boxPath,  new IPathModifierListener() 
 		{
 			@Override
 			public void onPathStarted(final PathModifier pPathModifier, final IEntity pEntity) 
@@ -132,12 +154,8 @@ public class Functions
 				
 			}
 		}));
-	}
-	
-	//FadeOut Function
-	public static void fadeOut(final Sprite a)
-	{
-		AlphaModifier yourModifier = new AlphaModifier(2f, 1f, 0f)
+		
+		AlphaModifier yourModifier = new AlphaModifier(1f, 0.5f, 0f)
 		{
 		        @Override
 		        protected void onModifierStarted(IEntity pItem)
