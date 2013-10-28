@@ -177,6 +177,60 @@ public class Functions
 		a.registerEntityModifier(yourModifier);
 	}
 	
+	//FadeOut Function
+	public static void ExchangePosition(final Sprite a, final Sprite b)
+	{
+		final Path boxPath = new Path(2).to(a.getX(), a.getY()).
+				to(b.getX(), b.getY());
+		
+		AlphaModifier yourModifier = new AlphaModifier(1f, 0.5f, 0f)
+		{
+		        @Override
+		        protected void onModifierStarted(IEntity pItem)
+		        {
+		                super.onModifierStarted(pItem);
+		                // Your action after starting modifier
+		        }
+		       
+		        @Override
+		        protected void onModifierFinished(IEntity pItem)
+		        {
+		                super.onModifierFinished(pItem);
+		                // Your action after finishing modifier
+		            	a.registerEntityModifier(new PathModifier((float)0.5, boxPath,  new IPathModifierListener() 
+		        		{
+		        			@Override
+		        			public void onPathStarted(final PathModifier pPathModifier, final IEntity pEntity) 
+		        			{
+		        				Debug.d("onPathStarted");
+		        			}
+
+		        			@Override
+		        			public void onPathWaypointStarted(final PathModifier pPathModifier, final IEntity pEntity, final int pWaypointIndex)
+		        			{
+		        				Debug.d("onPathWaypointStarted:  " + pWaypointIndex);
+		        		
+		        			}
+
+		        			@Override
+		        			public void onPathWaypointFinished(final PathModifier pPathModifier, final IEntity pEntity, final int pWaypointIndex) 
+		        			{
+		        				Debug.d("onPathWaypointFinished: " + pWaypointIndex);
+		        				
+		        			}
+
+		        			@Override
+		        			public void onPathFinished(final PathModifier pPathModifier, final IEntity pEntity) 
+		        			{
+		        				a.setAlpha(1);
+		        			}
+		        		}));
+		        }
+		};
+		 
+		a.registerEntityModifier(yourModifier);
+		
+	}
 	//Audio play Function
 	public static void playAudio(int val)
 	{

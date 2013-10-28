@@ -1,7 +1,5 @@
 package com.example.boxgame;
 
-import java.util.Random;
-
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -12,7 +10,6 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
-import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
@@ -23,14 +20,10 @@ import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtla
 import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
-import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.andengine.util.color.Color;
 import org.andengine.util.debug.Debug;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import android.content.Context;
-import android.hardware.SensorManager;
 import android.view.Display;
 
 public class MainActivity extends SimpleBaseGameActivity 
@@ -66,11 +59,12 @@ public class MainActivity extends SimpleBaseGameActivity
 	public static Sprite backGround, mula, kola, ma, mohis, keramBoard, megh, moi;
 	static Sprite mo;
 	static AnimatedSprite  parrot;
-	public TimerHandler timer1, timer2;
+	public TimerHandler timer1, timer2, timer3;
 	
 	static float mulaX , mulaY, kolaX, kolaY, maX, maY, mohisX, 
 		  mohisY, keramBoardX, keramBoardY, meghX, meghY, moiX, moiY;
 	static Sprite openedBox, closedBox;
+	
 	
 	@Override
 	public EngineOptions onCreateEngineOptions()
@@ -373,6 +367,49 @@ public class MainActivity extends SimpleBaseGameActivity
 		
 		//getting the context
 		MainActivity.context = getApplicationContext();
+		
+		timer2 = new TimerHandler( (float) 5, true, new ITimerCallback() 
+		{
+			@Override
+			public void onTimePassed(TimerHandler pTimerHandler)
+			{
+				// TODO Auto-generated method stub
+				
+				if(Objects.touchFlag1 == false)
+				{
+					Functions.ExchangePosition(ma, moi);
+					Functions.ExchangePosition(moi, ma);
+					
+				}
+				
+//				if(Objects.touchFlag2 == false)
+//				{
+//					
+//					Functions.ExchangePosition(mohis, mula);
+//					Functions.ExchangePosition(mula, mohis);
+//				}
+				
+			}
+		});
+		mScene.registerUpdateHandler(timer2);
+		
+		timer3 = new TimerHandler( (float) 3.5, true, new ITimerCallback() 
+		{
+			@Override
+			public void onTimePassed(TimerHandler pTimerHandler)
+			{
+				// TODO Auto-generated method stub
+				
+				if(Objects.touchFlag2 == false)
+				{
+					
+					Functions.ExchangePosition(mohis, mula);
+					Functions.ExchangePosition(mula, mohis);
+				}
+				
+			}
+		});
+		mScene.registerUpdateHandler(timer3);
 		
 		return mScene;
 	}

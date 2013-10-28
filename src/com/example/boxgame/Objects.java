@@ -9,7 +9,7 @@ import org.andengine.util.debug.Debug;
 public class Objects extends Sprite
 {
 
-	public static boolean touchFlag;
+	public static boolean touchFlag, touchFlag1, touchFlag2, touchFlag3, touchFlag4;
 	
 	int i =0;
 	public Objects(float pX, float pY, ITextureRegion pTextureRegion,
@@ -33,6 +33,7 @@ public class Objects extends Sprite
 			}
 			case TouchEvent.ACTION_MOVE: 
 			{
+				
 				this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, 
 						pSceneTouchEvent.getY() - this.getHeight() / 2);
 				
@@ -42,6 +43,7 @@ public class Objects extends Sprite
 					i++;
 					if(i==1)
 					{
+						touchFlag1 = true;
 						Functions.audioPlay = true;
 						Functions.playAudio(R.raw.moi);
 					}
@@ -53,6 +55,7 @@ public class Objects extends Sprite
 					i++;
 					if(i==1)
 					{
+						touchFlag1 = true;
 						Functions.audioPlay = true;
 						Functions.playAudio(R.raw.ma);
 					}
@@ -63,6 +66,7 @@ public class Objects extends Sprite
 					i++;
 					if(i==1)
 					{
+						touchFlag2 = true;
 						Functions.audioPlay = true;
 						Functions.playAudio(R.raw.mula);
 					}
@@ -83,6 +87,7 @@ public class Objects extends Sprite
 					i++;
 					if(i==1)
 					{
+						touchFlag2 = true;
 						Functions.audioPlay = true;
 						Functions.playAudio(R.raw.mohis);
 					}
@@ -108,6 +113,8 @@ public class Objects extends Sprite
 				i=0;
 				
 				touchFlag = false;
+				touchFlag1 = false;
+				touchFlag2 = false;
 				if(pSceneTouchEvent.getX()- this.getWidth()/2 == MainActivity.kola.getX() && 
 						pSceneTouchEvent.getY()- this.getHeight()/2 == MainActivity.kola.getY())
 				{
