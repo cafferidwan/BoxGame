@@ -187,7 +187,11 @@ public class MainActivity extends SimpleBaseGameActivity
 					if(Objects.touchFlag == false)
 					{
 						// Create jump
-						Functions.jump(kola, 0);
+						if(Functions.disableCol == 0)
+						{
+							Functions.jump(kola, 0);
+						}
+						
 					}
 				}
 				
@@ -201,7 +205,10 @@ public class MainActivity extends SimpleBaseGameActivity
 					if(Objects.touchFlag == false)
 					{
 						// Create jump
-						Functions.jump(keramBoard, 1);
+						if(Functions.disableCol == 0)
+						{
+							Functions.jump(keramBoard, 1);
+						}
 					}
 				}
 				
@@ -214,7 +221,10 @@ public class MainActivity extends SimpleBaseGameActivity
 				
 					if(Objects.touchFlag == false)
 					{
-						Functions.fadeOut(mohis);
+						if(Functions.disableCol == 0)
+						{
+							Functions.fadeOut(mohis);
+						}
 					}
 				}
 				
@@ -266,7 +276,10 @@ public class MainActivity extends SimpleBaseGameActivity
 				
 					if(Objects.touchFlag == false)
 					{
-						Functions.fadeOut(ma);
+						if(Functions.disableCol == 0)
+						{
+							Functions.fadeOut(ma);
+						}
 					}
 				}
 				
@@ -368,7 +381,7 @@ public class MainActivity extends SimpleBaseGameActivity
 		//getting the context
 		MainActivity.context = getApplicationContext();
 		
-		timer2 = new TimerHandler( (float) 5, true, new ITimerCallback() 
+		timer2 = new TimerHandler( (float) 3.5, true, new ITimerCallback() 
 		{
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler)
@@ -377,18 +390,10 @@ public class MainActivity extends SimpleBaseGameActivity
 				
 				if(Objects.touchFlag1 == false)
 				{
-					Functions.ExchangePosition(ma, moi);
-					Functions.ExchangePosition(moi, ma);
+					Functions.ExchangePosition(ma, keramBoard);
+					Functions.ExchangePosition(keramBoard, ma);
 					
 				}
-				
-//				if(Objects.touchFlag2 == false)
-//				{
-//					
-//					Functions.ExchangePosition(mohis, mula);
-//					Functions.ExchangePosition(mula, mohis);
-//				}
-				
 			}
 		});
 		mScene.registerUpdateHandler(timer2);
@@ -403,8 +408,8 @@ public class MainActivity extends SimpleBaseGameActivity
 				if(Objects.touchFlag2 == false)
 				{
 					
-					Functions.ExchangePosition(mohis, mula);
-					Functions.ExchangePosition(mula, mohis);
+					Functions.ExchangePosition(mohis, kola);
+					Functions.ExchangePosition(kola, mohis);
 				}
 				
 			}

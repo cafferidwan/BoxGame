@@ -12,11 +12,7 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.util.debug.Debug;
 import org.andengine.util.modifier.ease.EaseBounceOut;
 import org.andengine.util.modifier.ease.EaseCircularInOut;
-import org.andengine.util.modifier.ease.EaseCubicIn;
-import org.andengine.util.modifier.ease.EaseQuadIn;
 import org.andengine.util.modifier.ease.EaseQuadOut;
-import org.andengine.util.modifier.ease.EaseQuartIn;
-
 import android.content.Context;
 import android.media.MediaPlayer;
 
@@ -25,7 +21,7 @@ public class Functions
 	
 	static Boolean audioPlay = false;
 	static MediaPlayer mediaPlayer = new MediaPlayer();
-	static int val;
+	static int val, disableCol = 0;
 	public static SequenceEntityModifier jumpModifier, jumpModifier1;
 	
 	
@@ -189,6 +185,7 @@ public class Functions
 		        protected void onModifierStarted(IEntity pItem)
 		        {
 		                super.onModifierStarted(pItem);
+		                disableCol = 1;
 		                // Your action after starting modifier
 		        }
 		       
@@ -223,6 +220,7 @@ public class Functions
 		        			public void onPathFinished(final PathModifier pPathModifier, final IEntity pEntity) 
 		        			{
 		        				a.setAlpha(1);
+		        				disableCol = 0;
 		        			}
 		        		}));
 		        }

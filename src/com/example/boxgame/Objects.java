@@ -43,7 +43,6 @@ public class Objects extends Sprite
 					i++;
 					if(i==1)
 					{
-						touchFlag1 = true;
 						Functions.audioPlay = true;
 						Functions.playAudio(R.raw.moi);
 					}
@@ -66,7 +65,6 @@ public class Objects extends Sprite
 					i++;
 					if(i==1)
 					{
-						touchFlag2 = true;
 						Functions.audioPlay = true;
 						Functions.playAudio(R.raw.mula);
 					}
@@ -98,11 +96,17 @@ public class Objects extends Sprite
 					i++;
 					if(i==1)
 					{
-						Debug.d("////////");
-						Debug.d("closedBox.getX():"+MainActivity.closedBox.getX());
-						Debug.d("kola.getX():"+MainActivity.kola.getX());
-						Debug.d("closedBox.getY():"+MainActivity.closedBox.getY());
-						Debug.d("kola.getY():"+MainActivity.kola.getY());
+						touchFlag2 = true;
+					}
+				}
+				else if(pSceneTouchEvent.getX()- this.getWidth()/2 == MainActivity.keramBoard.getX() && 
+						pSceneTouchEvent.getY()- this.getHeight()/2 == MainActivity.keramBoard.getY())
+				{
+					i++;
+					if(i==1)
+					{
+						touchFlag1 = true;
+						
 					}
 				}
 				
